@@ -3,6 +3,7 @@ import {PropTypes} from 'prop-types';
 import './App.css';
 import Header from './components/Header';
 import Todo from './components/Todo';
+import Form from './components/Form';
 
 class App extends Component {
   constructor(props){
@@ -13,6 +14,8 @@ class App extends Component {
     };
 
     this.handleStatusChange = this.handleStatusChange.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
 
@@ -28,6 +31,35 @@ class App extends Component {
     this.setState({
       todos: todos
     })
+  }
+
+  nextId(){
+    this._nextId = this._nextId || 4;
+    return this._nextId++;
+  }
+
+  handleAdd(title){
+  
+    let todo = {
+      id: this.nextId(),
+      title: title,
+      completed: false
+    }
+
+    let todos = [...this.state.todos, todo];
+
+    this.setState({todos});
+  }
+
+  handleEdit(id, title){
+    let todos = this.state.todos.map(todo => {
+        if(todo.id === id){
+          todo.title = title;
+         }
+        return todo;
+      });
+      
+      this.setState({todos});
   }
 
   handleDelete(id){
@@ -52,10 +84,11 @@ class App extends Component {
                     title={todo.title} 
                     completed={todo.completed} 
                     onStatusChange={this.handleStatusChange}
+                    onEdit={this.handleEdit}
                     onDelete={this.handleDelete}
               />)}
-        
         </section>
+        <Form onAdd={this.handleAdd} />
       </main>
     );
   }
