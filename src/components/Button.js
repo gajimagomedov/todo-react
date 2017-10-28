@@ -8,8 +8,7 @@ function Button(props){
                 <i className="material-icons">{props.icon}</i>
                 :
                 props.children
-             }
-            
+             }       
         </button>
     );
 }
@@ -17,7 +16,7 @@ function Button(props){
 Button.propTypes = {
     className: PropTypes.string,
     icon: PropTypes.string,
-    onClick: PropTypes.func.isRequired,
+    onClick: PropTypes.func,
     children: PropTypes.node
 }
 
